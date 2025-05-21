@@ -1,7 +1,7 @@
 // src/components/GraphPanel.jsx
 import React, { useState, useEffect } from 'react';
 
-export default function GraphPanel({ onComplete, onGameOver, disabled, tickMs }) {
+export default function GraphPanel({ onComplete, onGameOver, disabled, tickMs, isCause  }) {
   const length = 20;
   const threshold = 75;
   // 初期データ：最初の10要素は0、それ以降はランダム
@@ -58,7 +58,7 @@ export default function GraphPanel({ onComplete, onGameOver, disabled, tickMs })
   const points = data.map((v, i) => `${(i / (length - 1)) * w},${scaleY(v)}`);
 
   return (
-    <div className="panel">
+    <div className={`panel ${isCause ? 'panel-cause' : ''}`} >
       <h3>異常値をクリックして解決</h3>
       <svg width={w} height={h} style={{ border: '1px solid #ccc' }}>
         {/* 安全基準線 */}

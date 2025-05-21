@@ -33,7 +33,7 @@ function genQuestion(range) {
   return { q: `${a} ${op} ${b} = ?`, correct, options };
 }
 
-export default function CalcPanel({ limitTime, onComplete, onGameOver, disabled, range }) {
+export default function CalcPanel({ limitTime, onComplete, onGameOver, disabled, range, isCause }) {
   const [qa, setQa] = useState(genQuestion(range));
   const [timeLeft, setTimeLeft] = useState(limitTime);
   const [feedback, setFeedback] = useState(null); // 'ok' or 'ng'
@@ -71,7 +71,7 @@ export default function CalcPanel({ limitTime, onComplete, onGameOver, disabled,
   };
 
   return (
-    <div className="panel" style={{ position: 'relative' }}>
+    <div className={`panel ${isCause ? 'panel-cause' : ''}`}  style={{ position: 'relative' }}>
       <h3>計算</h3>
       <p style={{ fontSize: '18px', margin: '4px 0' }}>{qa.q}</p>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px' }}>

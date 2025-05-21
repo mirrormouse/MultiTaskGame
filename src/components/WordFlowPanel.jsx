@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // 流れる単語を動物/植物で仕分けるパネル
-export default function WordFlowPanel({ onComplete, onGameOver, disabled, tick, delay }) {
+export default function WordFlowPanel({ onComplete, onGameOver, disabled, tick, delay, isCause  }) {
   const ANIMALS = ['ネコ', 'イヌ', 'トリ', 'ウシ', 'カメ', 'ウマ', 'ウサギ', 'サル', 'キツネ', 'クマ', 'ゾウ', 'ライオン', 'トラ', 'ヒツジ', 'ペンギン'];
   const PLANTS  = ['サクラ', 'バラ', 'モモ', 'ツバキ', 'スイカ', 'トマト', 'キュウリ', 'ナス', 'イチゴ', 'ススキ', 'コスモス', 'ヒマワリ', 'アサガオ', 'カエデ', 'イチョウ'];
 
@@ -75,8 +75,9 @@ export default function WordFlowPanel({ onComplete, onGameOver, disabled, tick, 
 
 
   return (
+    
     <div
-      className="panel"
+      className={`panel ${isCause ? 'panel-cause' : ''}`} 
       style={{
         position: 'relative',
         display: 'flex',

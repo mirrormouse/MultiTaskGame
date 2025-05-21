@@ -18,7 +18,7 @@ const genEmails = (numEmails) => {
   });
 };
 
-const EmailPanel = ({ limitTime, onComplete, onGameOver, disabled, numEmails }) => {
+const EmailPanel = ({ limitTime, onComplete, onGameOver, disabled, numEmails, isCause  }) => {
   const [emails, setEmails] = useState(genEmails(numEmails));
   const [timeLeft, setTimeLeft] = useState(limitTime);
   const [openMenuId, setOpenMenuId] = useState(null);
@@ -56,7 +56,7 @@ const EmailPanel = ({ limitTime, onComplete, onGameOver, disabled, numEmails }) 
   };
 
   return (
-    <div className="panel">
+    <div className={`panel ${isCause ? 'panel-cause' : ''}`} >
       <h3>メール分類（何もなければ既読）</h3>
       <ul>
         {emails.map(e=> (

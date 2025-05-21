@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 // 英単語をアルファベット順に並べ替えるパネル
-export default function SequencePanel({ limitTime, onComplete, onGameOver, disabled, numWords }) {
+export default function SequencePanel({ limitTime, onComplete, onGameOver, disabled, numWords, isCause }) {
   const [cards, setCards] = useState([]);
   const [dragIndex, setDragIndex] = useState(null);
   const [timeLeft, setTimeLeft] = useState(limitTime);
@@ -72,7 +72,9 @@ export default function SequencePanel({ limitTime, onComplete, onGameOver, disab
   };
 
   return (
-    <div className="panel">
+    <div
+      className={`panel ${isCause ? 'panel-cause' : ''}`} 
+    >
       <h3>アルファベット順に並べ替え</h3>
       <p style={{ margin: '4px 0', fontWeight: 'bold' }}>
         

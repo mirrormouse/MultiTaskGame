@@ -284,6 +284,7 @@ export default function App() {
   // 各パネルに対するレベルを保持するように変更
   const [displayLevels, setDisplayLevels] = useState(Array(6).fill(1));
   const [gameOver, setGameOver] = useState(false);
+  const [gameOverPanel, setGameOverPanel] = useState(null);
 
   // 1秒ごとにスコアと経過時間を更新
   useEffect(() => {
@@ -319,7 +320,12 @@ export default function App() {
   }
 
   const onComplete = () => {};
-  const onGameOver = () => setGameOver(true);
+  // 識別子付き onGameOver を返す
+  const makeOnGameOver = panelId => () => {
+    setGameOver(true);
+    setGameOverPanel(panelId);
+  };
+
 
   const config = LEVEL_CONFIG[Math.min(displayLevel - 1, MAX_LEVEL - 1)];
   //各displayLevelに対するconfigをそれぞれ用意
@@ -332,14 +338,14 @@ export default function App() {
   }
 
 
-  const commonProps = { onGameOver, disabled: gameOver, onComplete: handleCompleteForPanel(0) };
+  const commonProps = { disabled: gameOver, onComplete: handleCompleteForPanel(0) };
 
-  const SequenceProps = { ...commonProps, limitTime: getConfig(0).limitTime, numWords: getConfig(0).numWords, onComplete: handleCompleteForPanel(0) };
-  const EmailProps    = { ...commonProps, limitTime: getConfig(1).limitEmailTime, numEmails: getConfig(1).numEmails, onComplete: handleCompleteForPanel(1)};
-  const GraphProps    = { ...commonProps, tickMs: getConfig(2).graphTickMs, onComplete: handleCompleteForPanel(2) };
-  const TimerProps    = { ...commonProps, limitTime: getConfig(3).timerLimitTime, onComplete: handleCompleteForPanel(3) };
-  const CalcProps     = { ...commonProps, limitTime: getConfig(4).calcLimitTime, range: getConfig(4).calcRange, onComplete: handleCompleteForPanel(4) };
-  const WordFlowProps = { ...commonProps, tick: getConfig(5).wordFlowTick, delay: getConfig(5).delayBase, onComplete: handleCompleteForPanel(5) };
+  const SequenceProps = { ...commonProps, onGameOver: makeOnGameOver('Sequence'), isCause: gameOverPanel === "Sequence", limitTime: getConfig(0).limitTime, numWords: getConfig(0).numWords, onComplete: handleCompleteForPanel(0) };
+  const EmailProps    = { ...commonProps, onGameOver: makeOnGameOver('Email'), isCause: gameOverPanel === "Email", limitTime: getConfig(1).limitEmailTime, numEmails: getConfig(1).numEmails, onComplete: handleCompleteForPanel(1)};
+  const GraphProps    = { ...commonProps, onGameOver: makeOnGameOver('Graph'), isCause: gameOverPanel === "Graph", tickMs: getConfig(2).graphTickMs, onComplete: handleCompleteForPanel(2) };
+  const TimerProps    = { ...commonProps, onGameOver: makeOnGameOver('Timer'), isCause: gameOverPanel === "Timer", limitTime: getConfig(3).timerLimitTime, onComplete: handleCompleteForPanel(3) };
+  const CalcProps     = { ...commonProps, onGameOver: makeOnGameOver('Calc'), isCause: gameOverPanel === "Calc", limitTime: getConfig(4).calcLimitTime, range: getConfig(4).calcRange, onComplete: handleCompleteForPanel(4) };
+  const WordFlowProps = { ...commonProps, onGameOver: makeOnGameOver('WordFlow'), isCause: gameOverPanel === "WordFlow", tick: getConfig(5).wordFlowTick, delay: getConfig(5).delayBase, onComplete: handleCompleteForPanel(5) };
 
   const grid = { display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'repeat(3, 1fr)', gap: 10, height: '100vh', padding: 10 };
 
