@@ -13,3 +13,20 @@ body { margin:0; font-family:sans-serif; background:#f0f0f0; }
   background: pink !important;
   /* 必要なら border や box-shadow も変更可能 */
 }
+
+.panel-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 10px;
+  height: 100vh;
+  padding: 10px;
+}
+
+@media (max-width: 600px) {
+  /* 画面幅が 600px 未満なら１列表示に */
+  .panel-grid {
+    grid-template-columns: 1fr;
+    
+  }
+}

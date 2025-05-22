@@ -4,8 +4,8 @@ import React, { useState, useEffect } from 'react';
 // 円グラフによるTimerPanel（青→赤ゾーン上書き、両方とも残量に応じて縮小）
 export default function TimerPanel({ limitTime, onComplete, onGameOver, disabled, isCause }) {
   const [timeLeft, setTimeLeft] = useState(limitTime);
-  // 赤ゾーン比率（30%〜70%）
-  const [redRatio, setRedRatio] = useState(Math.random() * 0.4 + 0.3);
+  // 赤ゾーン比率（30%〜60%）
+  const [redRatio, setRedRatio] = useState(Math.random() * 0.3 + 0.3);
 
   // カウントダウン
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function TimerPanel({ limitTime, onComplete, onGameOver, disabled
   return (
 
     <div className={`panel ${isCause ? 'panel-cause' : ''}`}  style={{ textAlign: 'center' }}>
-      <h3>赤色に到達したらリセット</h3>
+      <h3>赤色に到達したらカウントをリセット</h3>
       <svg width={size} height={size} style={{ transform: 'rotate(-90deg)' }}>
         {/* 背景灰 */}
         <circle

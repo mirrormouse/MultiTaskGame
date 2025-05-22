@@ -2,7 +2,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 
 // 流れる単語を動物/植物で仕分けるパネル
-export default function WordFlowPanel({ onComplete, onGameOver, disabled, tick, delay, isCause  }) {
+export default function WordFlowPanel({ onComplete, onGameOver, disabled, tick, delay, isCause, level }) {
   const ANIMALS = ['ネコ', 'イヌ', 'トリ', 'ウシ', 'カメ', 'ウマ', 'ウサギ', 'サル', 'キツネ', 'クマ', 'ゾウ', 'ライオン', 'トラ', 'ヒツジ', 'ペンギン'];
   const PLANTS  = ['サクラ', 'バラ', 'モモ', 'ツバキ', 'スイカ', 'トマト', 'キュウリ', 'ナス', 'イチゴ', 'ススキ', 'コスモス', 'ヒマワリ', 'アサガオ', 'カエデ', 'イチョウ'];
 
@@ -34,20 +34,24 @@ export default function WordFlowPanel({ onComplete, onGameOver, disabled, tick, 
   useEffect(() => {
     if (disabled) return;
     let timeoutId;
-    const spawn = () => {
-      const isAnimal = Math.random() < 0.5;
-      const list = isAnimal ? ANIMALS : PLANTS;
-      const text = list[Math.floor(Math.random() * list.length)];
-      setItems(prev => [
-        ...prev,
-        { id: nextId.current++, text, isAnimal, lane: Math.random() < 0.5 ? 0 : 1, x: 0 }
-      ]);
-      const delayTime = delayBase + Math.random() * delayBase;
-      timeoutId = setTimeout(spawn, delayTime);
-    };
-    spawn();
+      const spawn = () => {
+        const isAnimal = Math.random() < 0.5;
+        const list = isAnimal ? ANIMALS : PLANTS;
+        const text = list[Math.floor(Math.random() * list.length)];
+        setItems(prev => [
+          ...prev,
+          { id: nextId.current++, text, isAnimal, lane: Math.random() < 0.5 ? 0 : 1, x: 0 }
+        ]);
+        const delayTime = delayBase + Math.random() * delayBase;
+        timeoutId = setTimeout(spawn, delayTime);
+        return () => clearTimeout(timeoutId);
+      };  
+    // —— 初回は“delayBase”後に spawn を呼び出す ——
+    timeoutId = setTimeout(spawn, delayBase);
+    // クリーンアップでタイマーを解除
     return () => clearTimeout(timeoutId);
-  }, [disabled, tickMs, delayBase]);
+
+  }, [disabled, tickMs, delayBase, level]);
 
   // 移動＆判定 (右端で判定)
   useEffect(() => {

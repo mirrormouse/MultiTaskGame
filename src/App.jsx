@@ -10,10 +10,11 @@ import WordFlowPanel from './components/WordFlowPanel';
 const LEVEL_CONFIG = [
   // Level 1
   {
+    level: 1,
     limitTime: 30,
     numWords: 3,
     limitEmailTime: 30,
-    numEmails: 1,
+    numEmails: 2,
     graphTickMs: 4000,
     timerLimitTime: 20,
     calcLimitTime: 30,
@@ -23,6 +24,7 @@ const LEVEL_CONFIG = [
   },
   // Level 2
   {
+    level: 2,
     limitTime: 30,
     numWords: 3,
     limitEmailTime: 30,
@@ -36,6 +38,7 @@ const LEVEL_CONFIG = [
   },
   // Level 3
   {
+    level: 3,
     limitTime: 40,
     numWords: 4,
     limitEmailTime: 30,
@@ -49,6 +52,7 @@ const LEVEL_CONFIG = [
   },
   // Level 4
   {
+    level: 4,
     limitTime: 40,
     numWords: 4,
     limitEmailTime: 40,
@@ -62,6 +66,7 @@ const LEVEL_CONFIG = [
   },
   // Level 5
   {
+    level: 5,
     limitTime: 40,
     numWords: 5,
     limitEmailTime: 30,
@@ -75,6 +80,7 @@ const LEVEL_CONFIG = [
   },
   // Level 6
   {
+    level: 6,
     limitTime: 40,
     numWords: 5,
     limitEmailTime: 30,
@@ -88,6 +94,7 @@ const LEVEL_CONFIG = [
   },
   // Level 7
   {
+    level: 7,
     limitTime: 35,
     numWords: 5,
     limitEmailTime: 25,
@@ -101,6 +108,7 @@ const LEVEL_CONFIG = [
   },
   // Level 8
   {
+    level: 8,
     limitTime: 35,
     numWords: 5,
     limitEmailTime: 30,
@@ -114,6 +122,7 @@ const LEVEL_CONFIG = [
   },
   // Level 9
   {
+    level: 9,
     limitTime: 30,
     numWords: 5,
     limitEmailTime: 25,
@@ -127,6 +136,7 @@ const LEVEL_CONFIG = [
   },
   // Level 10
   {
+    level: 10,
     limitTime: 25,
     numWords: 5,
     limitEmailTime: 25,
@@ -140,6 +150,7 @@ const LEVEL_CONFIG = [
   },
   // Level 11
   {
+    level: 11,
     limitTime: 25,
     numWords: 5,
     limitEmailTime: 25,
@@ -153,6 +164,7 @@ const LEVEL_CONFIG = [
   },
   // Level 12
   {
+    level: 12,
     limitTime: 25,
     numWords: 5,
     limitEmailTime: 40,
@@ -166,6 +178,7 @@ const LEVEL_CONFIG = [
   },
   // Level 13
   {
+    level: 13,
     limitTime: 25,
     numWords: 5,
     limitEmailTime: 30,
@@ -179,6 +192,7 @@ const LEVEL_CONFIG = [
   },
   // Level 14
   {
+    level: 14,
     limitTime: 20,
     numWords: 5,
     limitEmailTime: 25,
@@ -192,6 +206,7 @@ const LEVEL_CONFIG = [
   },
   // Level 15
   {
+    level: 15,
     limitTime: 40,
     numWords: 6,
     limitEmailTime: 40,
@@ -205,6 +220,7 @@ const LEVEL_CONFIG = [
   },
   // Level 16
   {
+    level: 16,
     limitTime: 35,
     numWords: 6,
     limitEmailTime: 35,
@@ -218,6 +234,7 @@ const LEVEL_CONFIG = [
   },
   // Level 17
   {
+    level: 17,
     limitTime: 30,
     numWords: 6,
     limitEmailTime: 30,
@@ -231,6 +248,7 @@ const LEVEL_CONFIG = [
   },
   // Level 18
   {
+    level: 18,
     limitTime: 25,
     numWords: 6,
     limitEmailTime: 25,
@@ -244,6 +262,7 @@ const LEVEL_CONFIG = [
   },
   // Level 19
   {
+    level: 19,
     limitTime: 25,
     numWords: 6,
     limitEmailTime: 25,
@@ -257,6 +276,7 @@ const LEVEL_CONFIG = [
   },
   // Level 20
   {
+    level: 20,
     limitTime: 20,
     numWords: 6,
     limitEmailTime: 20,
@@ -270,11 +290,10 @@ const LEVEL_CONFIG = [
   },
 ];
 const level_time = [0, 20, 50, 80, 110, 
-                    150, 190, 230, 270, 320, 
-                    370, 430, 500, 600, 700,
-                    820, 1000, 1200, 1500, 1800]; // 各レベルの経過時間
+                    150, 250, 350, 470, 600, 
+                    730, 860, 1000, 1140, 1280,
+                    1440, 1600, 1800, 2100, 2500]; // 各レベルの経過時間
 const MAX_LEVEL = LEVEL_CONFIG.length;
-const LEVEL_UP_INTERVAL = 10; // 秒ごとにレベルアップ
 
 export default function App() {
   const [score, setScore] = useState(0);
@@ -345,7 +364,7 @@ export default function App() {
   const GraphProps    = { ...commonProps, onGameOver: makeOnGameOver('Graph'), isCause: gameOverPanel === "Graph", tickMs: getConfig(2).graphTickMs, onComplete: handleCompleteForPanel(2) };
   const TimerProps    = { ...commonProps, onGameOver: makeOnGameOver('Timer'), isCause: gameOverPanel === "Timer", limitTime: getConfig(3).timerLimitTime, onComplete: handleCompleteForPanel(3) };
   const CalcProps     = { ...commonProps, onGameOver: makeOnGameOver('Calc'), isCause: gameOverPanel === "Calc", limitTime: getConfig(4).calcLimitTime, range: getConfig(4).calcRange, onComplete: handleCompleteForPanel(4) };
-  const WordFlowProps = { ...commonProps, onGameOver: makeOnGameOver('WordFlow'), isCause: gameOverPanel === "WordFlow", tick: getConfig(5).wordFlowTick, delay: getConfig(5).delayBase, onComplete: handleCompleteForPanel(5) };
+  const WordFlowProps = { ...commonProps, onGameOver: makeOnGameOver('WordFlow'), isCause: gameOverPanel === "WordFlow", tick: getConfig(5).wordFlowTick, delay: getConfig(5).delayBase, level: getConfig(5).level, onComplete: handleCompleteForPanel(5) };
 
   const grid = { display: 'grid', gridTemplateColumns: '1fr 1fr', gridTemplateRows: 'repeat(3, 1fr)', gap: 10, height: '100vh', padding: 10 };
 
@@ -355,7 +374,7 @@ export default function App() {
       <div className="score">
         TimeScore: {score} ／ Level: {desiredLevel}
       </div>
-      <div style={grid}>
+      <div className="panel-grid">
         <SequencePanel {...SequenceProps} />
         <EmailPanel    {...EmailProps}    />
         <GraphPanel    {...GraphProps}    />

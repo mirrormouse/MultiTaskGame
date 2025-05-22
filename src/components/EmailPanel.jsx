@@ -57,7 +57,7 @@ const EmailPanel = ({ limitTime, onComplete, onGameOver, disabled, numEmails, is
 
   return (
     <div className={`panel ${isCause ? 'panel-cause' : ''}`} >
-      <h3>メール分類（何もなければ既読）</h3>
+      <h3>メールを分類（何もなければ既読）</h3>
       <ul>
         {emails.map(e=> (
           <li key={e.id} style={{ marginBottom: '6px', position: 'relative' }}>

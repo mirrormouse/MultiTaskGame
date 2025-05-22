@@ -59,7 +59,7 @@ export default function GraphPanel({ onComplete, onGameOver, disabled, tickMs, i
 
   return (
     <div className={`panel ${isCause ? 'panel-cause' : ''}`} >
-      <h3>異常値をクリックして解決</h3>
+      <h3>異常値（赤色）をクリックして解決</h3>
       <svg width={w} height={h} style={{ border: '1px solid #ccc' }}>
         {/* 安全基準線 */}
         <line
