@@ -78,7 +78,7 @@ export default function GraphPanel({ onComplete, onGameOver, disabled, tickMs, i
             key={i}
             cx={(i / (length - 1)) * w}
             cy={scaleY(v)}
-            r={6}
+            r={7}
             fill={v > threshold ? '#f00' : '#333'}
             onClick={() => handlePoint(i)}
             style={{ cursor: v > threshold && !disabled ? 'pointer' : 'default' }}

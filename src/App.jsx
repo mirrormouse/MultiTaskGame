@@ -59,7 +59,7 @@ const LEVEL_CONFIG = [
     numEmails: 3,
     graphTickMs: 3500,
     timerLimitTime: 25,
-    calcLimitTime: 25,
+    calcLimitTime: 30,
     calcRange: 50,
     wordFlowTick: 150,
     delayBase: 3500
@@ -73,8 +73,8 @@ const LEVEL_CONFIG = [
     numEmails: 3,
     graphTickMs: 3000,
     timerLimitTime: 20,
-    calcLimitTime: 20,
-    calcRange: 80,
+    calcLimitTime: 30,
+    calcRange: 50,
     wordFlowTick: 120,
     delayBase: 3000
   },
@@ -87,8 +87,8 @@ const LEVEL_CONFIG = [
     numEmails: 3,
     graphTickMs: 2800,
     timerLimitTime: 20,
-    calcLimitTime: 20,
-    calcRange: 90,
+    calcLimitTime: 30,
+    calcRange: 50,
     wordFlowTick: 120,
     delayBase: 3000
   },
@@ -101,8 +101,8 @@ const LEVEL_CONFIG = [
     numEmails: 3,
     graphTickMs: 2500,
     timerLimitTime: 18,
-    calcLimitTime: 20,
-    calcRange: 100,
+    calcLimitTime: 27,
+    calcRange: 50,
     wordFlowTick: 120,
     delayBase: 2800
   },
@@ -115,8 +115,8 @@ const LEVEL_CONFIG = [
     numEmails: 4,
     graphTickMs: 2500,
     timerLimitTime: 18,
-    calcLimitTime: 18,
-    calcRange: 120,
+    calcLimitTime: 27,
+    calcRange: 70,
     wordFlowTick: 120,
     delayBase: 2600
   },
@@ -129,8 +129,8 @@ const LEVEL_CONFIG = [
     numEmails: 4,
     graphTickMs: 2500,
     timerLimitTime: 16,
-    calcLimitTime: 18,
-    calcRange: 150,
+    calcLimitTime: 25,
+    calcRange: 70,
     wordFlowTick: 120,
     delayBase: 2500
   },
@@ -143,8 +143,8 @@ const LEVEL_CONFIG = [
     numEmails: 4,
     graphTickMs: 2500,
     timerLimitTime: 16,
-    calcLimitTime: 18,
-    calcRange: 150,
+    calcLimitTime: 25,
+    calcRange: 80,
     wordFlowTick: 120,
     delayBase: 2400
   },
@@ -157,8 +157,8 @@ const LEVEL_CONFIG = [
     numEmails: 4,
     graphTickMs: 2500,
     timerLimitTime: 16,
-    calcLimitTime: 18,
-    calcRange: 150,
+    calcLimitTime: 25,
+    calcRange: 100,
     wordFlowTick: 120,
     delayBase: 2300
   },
@@ -171,8 +171,8 @@ const LEVEL_CONFIG = [
     numEmails: 5,
     graphTickMs: 2300,
     timerLimitTime: 15,
-    calcLimitTime: 18,
-    calcRange: 200,
+    calcLimitTime: 25,
+    calcRange: 100,
     wordFlowTick: 120,
     delayBase: 2200
   },
@@ -185,8 +185,8 @@ const LEVEL_CONFIG = [
     numEmails: 5,
     graphTickMs: 2000,
     timerLimitTime: 15,
-    calcLimitTime: 15,
-    calcRange: 200,
+    calcLimitTime: 25,
+    calcRange: 100,
     wordFlowTick: 100,
     delayBase: 2000
   },
@@ -199,8 +199,8 @@ const LEVEL_CONFIG = [
     numEmails: 5,
     graphTickMs: 2000,
     timerLimitTime: 15,
-    calcLimitTime: 15,
-    calcRange: 300,
+    calcLimitTime: 25,
+    calcRange: 150,
     wordFlowTick: 80,
     delayBase: 2000
   },
@@ -213,8 +213,8 @@ const LEVEL_CONFIG = [
     numEmails: 6,
     graphTickMs: 1500,
     timerLimitTime: 12,
-    calcLimitTime: 12,
-    calcRange: 500,
+    calcLimitTime: 23,
+    calcRange: 200,
     wordFlowTick: 80,
     delayBase: 1800
   },
@@ -227,8 +227,8 @@ const LEVEL_CONFIG = [
     numEmails: 6,
     graphTickMs: 1200,
     timerLimitTime: 12,
-    calcLimitTime: 12,
-    calcRange: 1000,
+    calcLimitTime: 22,
+    calcRange: 200,
     wordFlowTick: 80,
     delayBase: 1500
   },
@@ -241,8 +241,8 @@ const LEVEL_CONFIG = [
     numEmails: 6,
     graphTickMs: 1000,
     timerLimitTime: 12,
-    calcLimitTime: 12,
-    calcRange: 1000,
+    calcLimitTime: 21,
+    calcRange: 200,
     wordFlowTick: 80,
     delayBase: 1300
   },
@@ -255,8 +255,8 @@ const LEVEL_CONFIG = [
     numEmails: 6,
     graphTickMs: 900,
     timerLimitTime: 12,
-    calcLimitTime: 12,
-    calcRange: 1000,
+    calcLimitTime: 20,
+    calcRange: 300,
     wordFlowTick: 70,
     delayBase: 1200
   },
@@ -269,8 +269,8 @@ const LEVEL_CONFIG = [
     numEmails: 6,
     graphTickMs: 800,
     timerLimitTime: 11,
-    calcLimitTime: 11,
-    calcRange: 1500,
+    calcLimitTime: 20,
+    calcRange: 300,
     wordFlowTick: 60,
     delayBase: 1100
   },
@@ -283,8 +283,8 @@ const LEVEL_CONFIG = [
     numEmails: 6,
     graphTickMs: 500,
     timerLimitTime: 10,
-    calcLimitTime: 10,
-    calcRange: 2000,
+    calcLimitTime: 15,
+    calcRange: 500,
     wordFlowTick: 50,
     delayBase: 1000
   },
@@ -297,6 +297,7 @@ const MAX_LEVEL = LEVEL_CONFIG.length;
 
 export default function App() {
   const [score, setScore] = useState(0);
+  const [highScore, setHighScore] = useState(0);
   const [elapsed, setElapsed] = useState(0);
   // // 表示用レベル（問題を解き終わったタイミングでのみ更新）
   const [displayLevel, setDisplayLevel] = useState(1);
@@ -304,6 +305,20 @@ export default function App() {
   const [displayLevels, setDisplayLevels] = useState(Array(6).fill(1));
   const [gameOver, setGameOver] = useState(false);
   const [gameOverPanel, setGameOverPanel] = useState(null);
+
+  useEffect(() => {
+    const saved = localStorage.getItem('highScore');
+    if (saved !== null) {
+      setHighScore(parseInt(saved, 10));
+    }
+  }, []);
+  useEffect(() => {
+    if (score > highScore) {
+      setHighScore(score);
+      localStorage.setItem('highScore', score);
+    }
+  }, [score, highScore]);
+
 
   // 1秒ごとにスコアと経過時間を更新
   useEffect(() => {
@@ -370,9 +385,21 @@ export default function App() {
 
   return (
     <>
-      {gameOver && <div className="game-over">Game Over: score:{score}, level:{desiredLevel}</div>}
+      {gameOver && 
+        <div className="game-over" style={{ textAlign: 'center' }}>
+          Game Over: score:{score}, level:{desiredLevel} 
+            <br /><br />
+            HighScore: {highScore}
+            {score === highScore && (
+            <>
+            <br />
+                ベストスコア達成！
+            </>
+          )}
+        </div>
+      }
       <div className="score">
-        TimeScore: {score} ／ Level: {desiredLevel}
+        TimeScore: {score} ／ Level: {desiredLevel} 
       </div>
       <div className="panel-grid">
         <SequencePanel {...SequenceProps} />
