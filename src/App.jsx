@@ -312,12 +312,12 @@ export default function App() {
       setHighScore(parseInt(saved, 10));
     }
   }, []);
-  useEffect(() => {
-    if (score > highScore) {
-      setHighScore(score);
-      localStorage.setItem('highScore', score);
-    }
-  }, [score, highScore]);
+  // useEffect(() => {
+  //   if (score > highScore) {
+  //     setHighScore(score);
+  //     localStorage.setItem('highScore', score);
+  //   }
+  // }, [score, highScore]);
 
 
   // 1秒ごとにスコアと経過時間を更新
@@ -356,6 +356,10 @@ export default function App() {
   const onComplete = () => {};
   // 識別子付き onGameOver を返す
   const makeOnGameOver = panelId => () => {
+    if (score > highScore) {
+      setHighScore(score);
+      localStorage.setItem('highScore', score);
+    }
     setGameOver(true);
     setGameOverPanel(panelId);
   };
@@ -396,6 +400,23 @@ export default function App() {
                 ベストスコア達成！
             </>
           )}
+          <br /><br />
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              style={{
+                display: 'inline-block',
+                padding: '0.5em 1em',
+                fontSize: '1rem',
+                cursor: 'pointer',
+                borderRadius: '4px',
+                border: 'none',
+                backgroundColor: '#444444',
+                color: 'white',
+              }}
+            >
+              リトライ
+            </button>
         </div>
       }
       <div className="score">
