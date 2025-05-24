@@ -400,6 +400,8 @@ export default function App() {
       }
       <div className="score">
         TimeScore: {score} ／ Level: {desiredLevel} 
+                    <br />
+            HighScore: {highScore}
       </div>
       <div className="panel-grid">
         <SequencePanel {...SequenceProps} />
