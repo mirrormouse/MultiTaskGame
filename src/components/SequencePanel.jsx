@@ -84,6 +84,23 @@ export default function SequencePanel({ limitTime, onComplete, onGameOver, disab
     }
   };
 
+    const getItemStyle = (isDragging, isDropAnimating, draggableStyle) => ({
+      touchAction: 'none',
+      width: '80%',           // 通常時は中央寄せ
+      maxWidth: 320,
+      margin: isDragging ? '4px 0' : '4px auto',   // ドラッグ中は margin-auto を外して横ズレ防止
+      border: '2px solid #76c7c0',
+      borderRadius: 4,
+      background: '#e0f7f5',
+      cursor: 'move',
+      userSelect: 'none',
+      textAlign: 'center',
+      fontSize: 16,
+      // ドロップ後のアニメーションを短縮（既定 250 ms → 120 ms）
+      transitionDuration: '0s',
+      ...draggableStyle           // ★最後に展開して width をピクセル値で上書き
+    });
+
   return (
     <div
       className={`panel ${isCause ? 'panel-cause' : ''}`} 
@@ -93,46 +110,37 @@ export default function SequencePanel({ limitTime, onComplete, onGameOver, disab
         
       </p>
       <div>
-<DragDropContext onDragEnd={handleDragEnd}>
-  <Droppable droppableId="cards">
-    {provided => (
-      <div
-        ref={provided.innerRef}
-        {...provided.droppableProps}
-        style={{ display: 'flex', flexDirection: 'column', margin: '10px 0' }}
-      >
-        {cards.map((word, i) => (
-          <Draggable key={word} draggableId={word} index={i} isDragDisabled={disabled}>
-            {provided => (
+        <DragDropContext onDragEnd={handleDragEnd}>
+          <Droppable droppableId="cards">
+            {(provided, snapshot) => (
               <div
                 ref={provided.innerRef}
-                {...provided.draggableProps}
-                {...provided.dragHandleProps}
-                style={{
-                  ...provided.draggableProps.style,
-                  touchAction: 'none',
-                  width: '40%',
-                  margin: '4px auto',
-                  padding: '8px',
-                  border: '2px solid #76c7c0',
-                  borderRadius: 4,
-                  background: '#e0f7f5',
-                  cursor: disabled ? 'default' : 'move',
-                  userSelect: 'none',
-                  textAlign: 'center',
-                  fontSize: 16
-                }}
+                {...provided.droppableProps}
+                style={{ display: 'flex', flexDirection: 'column', margin: '10px 0' }}
               >
-                {word}
+                {cards.map((word, i) => (
+                  <Draggable key={word} draggableId={word} index={i} isDragDisabled={disabled}>
+                    {provided => (
+                      <div
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                        style={getItemStyle(
+                          snapshot.isDragging,
+                          snapshot.isDropAnimating,
+                          provided.draggableProps.style
+                        )}
+                      >
+                        {word}
+                      </div>
+                    )}
+                  </Draggable>
+                ))}
+                {provided.placeholder}
               </div>
             )}
-          </Draggable>
-        ))}
-        {provided.placeholder}
-      </div>
-    )}
-  </Droppable>
-</DragDropContext>
+          </Droppable>
+        </DragDropContext>
 
       </div>
       <button
