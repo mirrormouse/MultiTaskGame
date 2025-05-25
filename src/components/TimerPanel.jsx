@@ -12,7 +12,7 @@ export default function TimerPanel({ limitTime, onComplete, onGameOver, disabled
     if (disabled) return;
     if (timeLeft <= 0) { onGameOver(); return; }
     const id = setTimeout(() => setTimeLeft(t => t-1), 1000);
-    console.log('timeLeft', timeLeft);
+    // console.log('timeLeft', timeLeft);
     return () => clearTimeout(id);
   }, [timeLeft, disabled]);
 

@@ -16,7 +16,7 @@ export default function GraphPanel({ onComplete, onGameOver, disabled, tickMs, i
     const id = setTimeout(() => setTime(t => t+1), 1000);
     if (time >= 5) {
       onComplete();
-      console.log('Game completed');
+      // console.log('Game completed');
     }
     return () => clearTimeout(id);
   }, [time, disabled]);

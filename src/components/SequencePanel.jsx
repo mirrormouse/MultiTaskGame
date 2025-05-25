@@ -1,6 +1,6 @@
 // src/components/SequencePanel.jsx
-import React, { useState, useEffect } from 'react';
-
+import React, { useState, useEffect, useRef } from 'react';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 // 英単語をアルファベット順に並べ替えるパネル
 export default function SequencePanel({ limitTime, onComplete, onGameOver, disabled, numWords, isCause }) {
   const [cards, setCards] = useState([]);
@@ -36,46 +36,6 @@ export default function SequencePanel({ limitTime, onComplete, onGameOver, disab
     return () => clearTimeout(tid);
   }, [timeLeft, disabled]);
 
-  
-  // タッチ開始
-  const handleTouchStart = (e, i) => {
-    if (disabled) return;
-    const { clientX, clientY } = e.touches[0];
-    touchState.current = { startX: clientX, startY: clientY };
-    setDragIndex(i);
-  };
-
-
-  // タッチ移動中
-  const handleTouchMove = e => {
-    if (disabled || dragIndex === null) return;
-    e.preventDefault();  // スクロールを抑止
-
-    const { clientX, clientY } = e.touches[0];
-    // タッチ位置の下にある要素を取得
-    const el = document.elementFromPoint(clientX, clientY);
-    if (!el) return;
-    const hoverIndex = el.dataset.index;
-    if (hoverIndex == null) return;
-
-    const i = Number(hoverIndex);
-    if (i !== dragIndex) {
-      // カードの並び替え
-      setCards(prev => {
-        const newCards = [...prev];
-        const [moved] = newCards.splice(dragIndex, 1);
-        newCards.splice(i, 0, moved);
-        return newCards;
-      });
-      setDragIndex(i);
-    }
-  };
-
-  // タッチ終了（＝ドロップ）
-  const handleTouchEnd = e => {
-    e.preventDefault();
-    setDragIndex(null);
-  };
 
   // ドラッグ開始
   const handleDragStart = i => {
@@ -101,6 +61,18 @@ export default function SequencePanel({ limitTime, onComplete, onGameOver, disab
     setDragIndex(null);
   };
 
+  const handleDragEnd = (result) => {
+    if (!result.destination || disabled) return;
+
+    setCards(prev => {
+      const reordered = Array.from(prev);
+      const [moved] = reordered.splice(result.source.index, 1);
+      reordered.splice(result.destination.index, 0, moved);
+      return reordered;
+    });
+  };
+
+
   // 送信: アルファベット順かチェック
   const handleSubmit = () => {
     if (disabled) return;
@@ -120,35 +92,48 @@ export default function SequencePanel({ limitTime, onComplete, onGameOver, disab
       <p style={{ margin: '4px 0', fontWeight: 'bold' }}>
         
       </p>
-      <div style={{ display: 'flex', flexDirection: 'column', margin: '10px 0' }}>
+      <div>
+<DragDropContext onDragEnd={handleDragEnd}>
+  <Droppable droppableId="cards">
+    {provided => (
+      <div
+        ref={provided.innerRef}
+        {...provided.droppableProps}
+        style={{ display: 'flex', flexDirection: 'column', margin: '10px 0' }}
+      >
         {cards.map((word, i) => (
-          <div
-            key={i}
-            draggable={!disabled}
-            onDragStart={() => handleDragStart(i)}
-            onDragEnter={() => handleDragEnter(i)}
-            onDragOver={e => e.preventDefault()}
-            onDrop={handleDrop}
-            onTouchStart={e => handleTouchStart(e, i)}
-            onTouchMove={handleTouchMove}
-            onTouchEnd={handleTouchEnd}
-            style={{
-              touchAction: 'none', 
-              width: '80%',
-              margin: '4px auto',
-              padding: '8px',
-              border: '2px solid #76c7c0',
-              borderRadius: 4,
-              background: '#e0f7f5',
-              cursor: disabled ? 'default' : 'move',
-              userSelect: 'none',
-              textAlign: 'center',
-              fontSize: 16
-            }}
-          >
-            {word}
-          </div>
+          <Draggable key={word} draggableId={word} index={i} isDragDisabled={disabled}>
+            {provided => (
+              <div
+                ref={provided.innerRef}
+                {...provided.draggableProps}
+                {...provided.dragHandleProps}
+                style={{
+                  ...provided.draggableProps.style,
+                  touchAction: 'none',
+                  width: '40%',
+                  margin: '4px auto',
+                  padding: '8px',
+                  border: '2px solid #76c7c0',
+                  borderRadius: 4,
+                  background: '#e0f7f5',
+                  cursor: disabled ? 'default' : 'move',
+                  userSelect: 'none',
+                  textAlign: 'center',
+                  fontSize: 16
+                }}
+              >
+                {word}
+              </div>
+            )}
+          </Draggable>
         ))}
+        {provided.placeholder}
+      </div>
+    )}
+  </Droppable>
+</DragDropContext>
+
       </div>
       <button
         onClick={handleSubmit}

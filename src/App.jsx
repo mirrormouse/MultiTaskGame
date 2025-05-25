@@ -370,7 +370,7 @@ export default function App() {
   function getConfig(index) {
     const level = displayLevels[index];
     if (index === 2){
-      console.log('GraphPanel level:', level);
+      // console.log('GraphPanel level:', level);
     }
     return LEVEL_CONFIG[Math.min(level - 1, MAX_LEVEL - 1)];
   }
