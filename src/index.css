@@ -1,5 +1,5 @@
 body { margin:0; font-family:sans-serif; background:#f0f0f0; }
-.panel { border:1px solid #ccc; border-radius:4px; padding:8px; background:#fff; box-shadow:0 2px 4px rgba(0,0,0,0.1); position:relative; }
+.panel { border:1px solid #ccc; border-radius:4px; padding:8px; background:#fff; box-shadow:0 2px 4px rgba(0,0,0,0.1); position:relative;}
 .progress-bar { height:6px; background:#76c7c0; margin-top:8px; transition:width 0.1s linear; }
 .menu { position:absolute; top:0; left:0; background:#fff; border:1px solid #ccc; border-radius:4px; box-shadow:0 2px 4px rgba(0,0,0,0.1); z-index:5; }
 .menu ul { list-style:none; margin:0; padding:4px 0; }
@@ -27,6 +27,13 @@ body { margin:0; font-family:sans-serif; background:#f0f0f0; }
   /* 画面幅が 600px 未満なら１列表示に */
   .panel-grid {
     grid-template-columns: 1fr;
+
+    margin-top: 20%; /* 上の余白をなくす */
     
+  }
+
+  .panel {
+    width: 90%;
+    height: 40vh;
   }
 }
